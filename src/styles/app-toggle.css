@@ -1,0 +1,34 @@
+:root {
+  --toggle-width: calc(40rem / 16);
+  --toggle-height: calc(20rem / 16);
+  --thumb-padding: calc(3rem / 16);
+
+  --thumb-size: calc(var(--toggle-height) - 2 * var(--thumb-padding));
+}
+
+.app-toggle .react-toggle-track {
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  background: theme("colors.gray.300") !important;
+  border-radius: 10px;
+}
+
+.app-toggle.react-toggle--checked .react-toggle-track {
+  background: theme("colors.purple.100") !important;
+}
+
+.app-toggle .react-toggle-thumb {
+  width: var(--thumb-size);
+  height: var(--thumb-size);
+
+  top: var(--thumb-padding);
+  left: var(--thumb-padding);
+
+  border: none;
+  background: white;
+  box-shadow: none !important;
+}
+
+.app-toggle.react-toggle--checked .react-toggle-thumb {
+  left: calc(var(--toggle-width) - var(--thumb-size) - var(--thumb-padding));
+}

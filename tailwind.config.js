@@ -11,8 +11,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        purple: "#635FC7",
         purple: {
+          100: "#635FC7",
           hover: "#A8A4FF",
         },
         black: "#000112",
@@ -79,6 +79,22 @@ module.exports = {
             fontWeight: "500",
           },
         ],
+      },
+      width: {
+        75: pxToRem(300),
+      },
+      margin: {
+        4.5: pxToRem(18),
+        8.5: pxToRem(34),
+        13.5: pxToRem(54),
+        75: pxToRem(300),
+      },
+      padding: {
+        4.5: pxToRem(18),
+        5.5: pxToRem(22),
+      },
+      transitionProperty: {
+        spacing: "margin",
       },
     },
   },

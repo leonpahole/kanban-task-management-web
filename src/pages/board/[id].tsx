@@ -1,11 +1,11 @@
 import { Layout } from "@/components/layout/Layout";
 import Head from "next/head";
 
-export default function Home() {
+export default function BoardView() {
   return (
     <>
       <Head>
-        <title>Your kanban board</title>
+        <title>{} | Your kanban board</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/favicon-32x32.png" />
       </Head>
