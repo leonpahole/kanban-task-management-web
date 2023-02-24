@@ -9,7 +9,7 @@ export const boardListItemBaseClasses =
   "mr-6 flex items-center gap-4 rounded-r-full py-4 pl-8 pr-4 text-hm";
 
 interface IProps {
-  board: BoardModels.Board;
+  board: BoardModels.BoardExcerpt;
 }
 
 export const BoardListItem = ({ board }: IProps) => {

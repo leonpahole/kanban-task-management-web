@@ -19,6 +19,8 @@
     "react/require-default-props": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "react/destructuring-assignment": "off",
+    "no-bitwise": "off",
+    "no-plusplus": "off",
     "no-restricted-imports": [
       "error",
       {

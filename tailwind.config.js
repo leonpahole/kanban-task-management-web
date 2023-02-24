@@ -27,8 +27,8 @@ module.exports = {
           dark: "#3E3F4E",
           light: "#E4EBFA",
         },
-        red: "#EA5555",
         red: {
+          100: "#EA5555",
           hover: "#FF9898",
         },
       },
@@ -81,6 +81,7 @@ module.exports = {
         ],
       },
       width: {
+        70: pxToRem(280),
         75: pxToRem(300),
       },
       margin: {
@@ -95,6 +96,15 @@ module.exports = {
       },
       transitionProperty: {
         spacing: "margin",
+      },
+      boxShadow: {
+        md: "0px 4px 6px rgba(54, 78, 126, 0.101545)",
+      },
+      backgroundImage: {
+        "add-column-gradient-dark":
+          "linear-gradient(180deg, rgba(43, 44, 55, 0.25) 0%, rgba(43, 44, 55, 0.125) 100%)",
+        "add-column-gradient-light":
+          "linear-gradient(180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%)",
       },
     },
   },

@@ -6,11 +6,13 @@ export default function Home() {
     <>
       <Head>
         <title>Your kanban board</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/images/favicon-32x32.png" />
       </Head>
       <Layout>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <div className="h-100 flex flex-1 items-center justify-center">
+          <h2 className="text-bl text-gray-medium">
+            Select or add the board on the right.
+          </h2>
+        </div>
       </Layout>
     </>
   );
