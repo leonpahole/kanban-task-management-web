@@ -6,7 +6,10 @@ import IconBoard from "public/images/icon-board.svg";
 import IconBoardWhite from "public/images/icon-board-white.svg";
 
 export const boardListItemBaseClasses =
-  "mr-6 flex items-center gap-4 rounded-r-full py-4 pl-8 pr-4 text-hm";
+  "mr-6 flex items-center justify-start gap-4 rounded-r-full py-4 pl-8 pr-4 text-hm";
+
+export const boardListItemHoverClasses =
+  "text-gray-medium hover:bg-purple-100 hover:bg-opacity-10 hover:text-purple-100 dark:hover:bg-white dark:hover:bg-opacity-100";
 
 interface IProps {
   board: BoardModels.BoardExcerpt;
@@ -21,7 +24,7 @@ export const BoardListItem = ({ board }: IProps) => {
       <Link
         href={`/board/${board.id}`}
         className={`${boardListItemBaseClasses} ${
-          isActive ? "bg-purple-100 text-white" : "text-gray-medium"
+          isActive ? "bg-purple-100 text-white" : boardListItemHoverClasses
         }`}
       >
         <Image

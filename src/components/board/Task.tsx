@@ -18,7 +18,7 @@ export const Task = ({ task }: IProps) => {
   }
 
   return (
-    <article className="dark: w-full rounded-lg bg-white py-6 px-4 shadow-md dark:bg-gray-dark">
+    <article className="w-full rounded-lg bg-white py-6 px-4 shadow-md dark:bg-gray-dark">
       <h3 className="text-hm text-black dark:text-white">{task.title}</h3>
       {subtasksContent}
     </article>

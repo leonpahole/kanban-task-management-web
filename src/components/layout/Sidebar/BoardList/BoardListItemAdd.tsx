@@ -1,4 +1,7 @@
-import { boardListItemBaseClasses } from "@/components/layout/Sidebar/BoardList/BoardListItem";
+import {
+  boardListItemBaseClasses,
+  boardListItemHoverClasses,
+} from "@/components/layout/Sidebar/BoardList/BoardListItem";
 import Image from "next/image";
 import IconBoardPurple from "public/images/icon-board-purple.svg";
 
@@ -8,10 +11,10 @@ interface IProps {
 
 export const BoardListItemAdd = ({ onClick }: IProps) => {
   return (
-    <li>
+    <li className="flex">
       <button
         onClick={onClick}
-        className={`${boardListItemBaseClasses} text-purple-100`}
+        className={`${boardListItemBaseClasses} ${boardListItemHoverClasses} flex-1 text-purple-100`}
         type="button"
       >
         <Image src={IconBoardPurple} width="16" height="16" alt="" />

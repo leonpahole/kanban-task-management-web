@@ -1,5 +1,6 @@
 import { Column } from "@/components/board/Column";
 import { ColumnAdd } from "@/components/board/ColumnAdd";
+import { PrimaryButton } from "@/components/shared/PrimaryButton";
 import { BoardModels } from "@/util/board/board.models";
 
 interface IProps {
@@ -8,14 +9,23 @@ interface IProps {
 
 export const Board = ({ board }: IProps) => {
   return (
-    <div className="flex-1 overflow-auto">
-      <div className="flex gap-6 pl-6 pt-6 pb-12">
-        {board.columns.map((column) => (
-          <Column key={column.id} column={column} />
-        ))}
-        <ColumnAdd />
-        <div className="w-6 flex-shrink-0" />
-      </div>
+    <div className="min-h-0 flex-1 flex-col overflow-x-auto">
+      {board.columns.length > 0 ? (
+        <div className="flex h-full min-h-0 flex-1 gap-6 pl-6 pt-6">
+          {board.columns.map((column) => (
+            <Column key={column.id} column={column} />
+          ))}
+          <ColumnAdd />
+          <div className="w-px flex-shrink-0" />
+        </div>
+      ) : (
+        <div className="flex h-full flex-col items-center justify-center">
+          <p className="mb-8 text-center text-hl text-gray-medium">
+            This board is empty. Create a new column to get started.
+          </p>
+          <PrimaryButton>+ Add New Column</PrimaryButton>
+        </div>
+      )}
     </div>
   );
 };

@@ -17,6 +17,10 @@
   background: theme("colors.purple.100") !important;
 }
 
+.app-toggle.react-toggle .react-toggle-track:hover {
+  background: theme("colors.purple.hover") !important;
+}
+
 .app-toggle .react-toggle-thumb {
   width: var(--thumb-size);
   height: var(--thumb-size);

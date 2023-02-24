@@ -8,7 +8,7 @@ interface IProps {
 
 export const Column = ({ column }: IProps) => {
   return (
-    <section className="flex-shrink-0">
+    <section className="flex flex-shrink-0 flex-col">
       {/* heading */}
       <div className="mb-6 flex items-center">
         <div
@@ -23,10 +23,18 @@ export const Column = ({ column }: IProps) => {
       </div>
 
       {/* task list */}
-      <div className="flex w-70 flex-col gap-5">
-        {column.tasks.map((task) => (
-          <Task key={task.id} task={task} />
-        ))}
+      <div className="flex w-70 flex-1 flex-col gap-5 overflow-auto pb-12 scrollbar-hide">
+        {column.tasks.length > 0 ? (
+          <>
+            {column.tasks.map((task) => (
+              <Task key={task.id} task={task} />
+            ))}
+          </>
+        ) : (
+          <div className="w-full rounded-lg border border-dashed border-gray-medium bg-transparent py-6 px-4 text-center italic text-gray-medium opacity-40">
+            Drop tasks here
+          </div>
+        )}
       </div>
     </section>
   );

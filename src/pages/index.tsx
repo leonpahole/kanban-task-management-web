@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="h-100 flex flex-1 items-center justify-center">
-          <h2 className="text-bl text-gray-medium">
+          <h2 className="text-center text-hl text-gray-medium">
             Select or add the board on the right.
           </h2>
         </div>

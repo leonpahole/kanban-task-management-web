@@ -22,6 +22,7 @@
     "react-query": "^3.39.3",
     "react-spinners": "^0.13.8",
     "react-toggle": "^4.1.3",
+    "tailwind-scrollbar-hide": "^1.1.7",
     "typescript": "4.9.5"
   },
   "devDependencies": {

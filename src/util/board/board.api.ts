@@ -3,6 +3,11 @@ import { BoardModels } from "@/util/board/board.models";
 export namespace BoardApi {
   const testData: BoardModels.Board[] = [
     {
+      id: 100,
+      name: "No tasks",
+      columns: [],
+    },
+    {
       id: 1,
       name: "Platform Launch",
       columns: [
