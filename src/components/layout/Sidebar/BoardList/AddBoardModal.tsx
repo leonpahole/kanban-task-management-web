@@ -89,6 +89,7 @@ export const AddBoardModal = ({ isOpen, onClose }: IProps) => {
           onTextChange={setName}
           error={nameError}
           autoFocus
+          disabled={isLoading}
         />
 
         <AppListInput
@@ -97,6 +98,8 @@ export const AddBoardModal = ({ isOpen, onClose }: IProps) => {
           onChange={setColumnNames}
           label="Columns"
           disabled={isLoading}
+          placeholders={["e.g. Todo", "e.g. Doing", "e.g. Done"]}
+          buttonLabel="+ Add New Column"
         />
 
         <AppButton

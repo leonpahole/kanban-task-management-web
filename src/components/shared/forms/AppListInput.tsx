@@ -12,6 +12,9 @@ interface IProps {
   onChange(value: AppListInputValue): void;
   label: string;
   disabled?: boolean;
+  placeholders?: string[];
+  buttonLabel: string;
+  className?: string;
 }
 
 export const AppListInput = ({
@@ -20,6 +23,9 @@ export const AppListInput = ({
   onChange,
   label,
   disabled,
+  placeholders,
+  buttonLabel,
+  className,
 }: IProps) => {
   const onInputValueChange = (index: number, text: string) => {
     const newValue = [...value];
@@ -39,21 +45,21 @@ export const AppListInput = ({
   };
 
   return (
-    <fieldset>
+    <fieldset className={className}>
       <legend className="mb-2 text-bm font-bold capitalize text-gray-medium dark:text-white">
         {label}
       </legend>
 
       <div className="mb-3 flex flex-col gap-3">
         {value.map((val, i) => (
-          <div className="flex gap-4">
+          <div className="flex gap-4" key={i}>
             <AppInput
               id={`${id}-app-list-input-${i}`}
-              key={i}
               value={val}
-              placeholder="e.g. Todo"
+              placeholder={placeholders?.[i]}
               onTextChange={(text) => onInputValueChange(i, text)}
               autoFocus={i > 0}
+              disabled={disabled}
             />
             <button
               type="button"
@@ -73,7 +79,7 @@ export const AppListInput = ({
         className="w-full"
         disabled={disabled}
       >
-        + Add New Column
+        {buttonLabel}
       </AppButton>
     </fieldset>
   );

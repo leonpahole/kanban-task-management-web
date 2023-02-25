@@ -1,6 +1,6 @@
-import { Task } from "@/components/board/Task";
 import { BoardModels } from "@/util/board/board.models";
 import { MathUtils } from "@/util/math.utils";
+import { Task } from "@/components/board/task/Task";
 
 interface IProps {
   column: BoardModels.Column;

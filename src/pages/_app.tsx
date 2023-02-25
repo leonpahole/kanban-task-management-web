@@ -5,16 +5,22 @@ import { plusJakartaSans } from "@/fonts";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
+import Modal from "react-modal";
 
 import "react-toastify/dist/ReactToastify.css";
 
 import "@/styles/globals.css";
+import { useEffect } from "react";
 
 export const PageWrapperId = "__page-wrapper__";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    Modal.setAppElement("#modals");
+  }, []);
+
   return (
     <>
       <Head>

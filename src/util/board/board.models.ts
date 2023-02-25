@@ -8,6 +8,10 @@ export namespace BoardModels {
     columns: Column[];
   }
 
+  export type AddBoardRequest = Pick<BoardExcerpt, "name"> & {
+    columnNames: string[];
+  };
+
   export interface Column {
     id: number;
     name: string;
@@ -18,9 +22,13 @@ export namespace BoardModels {
     id: number;
     title: string;
     description: string;
-    status: TaskStatus;
     subtasks: Subtask[];
   }
+
+  export type AddTaskRequest = Pick<Task, "title" | "description"> & {
+    columnId: number;
+    subtasksNames: string[];
+  };
 
   export enum TaskStatus {
     TODO = "TODO",

@@ -28,14 +28,8 @@ export namespace BoardQueries {
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({
-        name,
-        columnNames,
-      }: {
-        name: string;
-        columnNames: string[];
-      }) => {
-        return BoardService.add(name, columnNames);
+      mutationFn: (request: BoardModels.AddBoardRequest) => {
+        return BoardService.add(request);
       },
       onSuccess: (newBoard) => {
         queryClient.setQueryData(
@@ -52,6 +46,47 @@ export namespace BoardQueries {
         queryClient.setQueryData(boardKey(newBoard.id), () => {
           return newBoard;
         });
+      },
+    });
+  };
+
+  export const useAddTask = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: ({
+        boardId,
+        task,
+      }: {
+        boardId: number;
+        task: BoardModels.AddTaskRequest;
+      }) => {
+        return BoardService.addTask(boardId, task);
+      },
+      onSuccess: (newTask, variables) => {
+        queryClient.setQueryData(
+          boardKey(variables.boardId),
+          (oldBoard: BoardModels.Board | undefined): BoardModels.Board => {
+            if (!oldBoard) {
+              return undefined as any;
+            }
+
+            return {
+              ...oldBoard,
+              columns: oldBoard.columns.map((col) => {
+                let { tasks } = col;
+                if (col.id === variables.task.columnId) {
+                  tasks = [newTask, ...col.tasks];
+                }
+
+                return {
+                  ...col,
+                  tasks,
+                };
+              }),
+            };
+          }
+        );
       },
     });
   };

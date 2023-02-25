@@ -14,8 +14,6 @@ export const NavbarLogo = withClientOnly(() => {
       <Image
         src={isDarkMode ? LogoLight : LogoDark}
         alt=""
-        width="152"
-        height="25"
         className="mb-9 ml-6 mr-4 mt-4"
       />
       <div
