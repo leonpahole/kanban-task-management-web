@@ -1,7 +1,7 @@
 import { Column } from "@/components/board/Column";
 import { ColumnAdd } from "@/components/board/ColumnAdd";
-import { PrimaryButton } from "@/components/shared/PrimaryButton";
 import { BoardModels } from "@/util/board/board.models";
+import { AppButton } from "@/components/shared/AppButton";
 
 interface IProps {
   board: BoardModels.Board;
@@ -23,7 +23,7 @@ export const Board = ({ board }: IProps) => {
           <p className="mb-8 text-center text-hl text-gray-medium">
             This board is empty. Create a new column to get started.
           </p>
-          <PrimaryButton>+ Add New Column</PrimaryButton>
+          <AppButton>+ Add New Column</AppButton>
         </div>
       )}
     </div>

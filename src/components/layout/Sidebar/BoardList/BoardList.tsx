@@ -13,8 +13,6 @@ export const BoardList = () => {
     refetch,
   } = useQuery("boards", () => BoardService.list());
 
-  const onBoardAddClick = () => {};
-
   let content;
 
   if (isLoading) {
@@ -34,7 +32,7 @@ export const BoardList = () => {
           {boards!.map((board) => (
             <BoardListItem board={board} key={board.id} />
           ))}
-          <BoardListItemAdd onClick={onBoardAddClick} />
+          <BoardListItemAdd />
         </ul>
       </nav>
     );

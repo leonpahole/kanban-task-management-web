@@ -1,4 +1,5 @@
 @import "./app-toggle.css";
+@import "./app-toast.css";
 
 @tailwind base;
 @tailwind components;

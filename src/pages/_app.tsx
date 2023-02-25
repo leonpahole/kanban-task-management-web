@@ -4,6 +4,9 @@ import Head from "next/head";
 import { plusJakartaSans } from "@/fonts";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import "@/styles/globals.css";
 
@@ -20,14 +23,17 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <div
-            id={PageWrapperId}
-            className={`font-sans ${plusJakartaSans.variable}`}
-          >
+          <div className={`font-sans ${plusJakartaSans.variable}`}>
             <Component {...pageProps} />
           </div>
         </ThemeProvider>
         <ReactQueryDevtools initialIsOpen={false} />
+        <ToastContainer
+          position="bottom-center"
+          hideProgressBar
+          theme="colored"
+          bodyClassName="!font-sans"
+        />
       </QueryClientProvider>
     </>
   );

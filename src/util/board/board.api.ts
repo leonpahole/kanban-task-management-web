@@ -535,8 +535,8 @@ export namespace BoardApi {
     },
   ];
 
-  export const list = (): Promise<BoardModels.BoardExcerpt[]> => {
-    return Promise.resolve(testData);
+  export const list = async (): Promise<BoardModels.BoardExcerpt[]> => {
+    return [...testData];
   };
 
   const sleep = (timeout: number) => {
@@ -554,6 +554,30 @@ export namespace BoardApi {
       throw new Error("Not found");
     }
 
-    return Promise.resolve(board);
+    return board;
+  };
+
+  export const add = async (
+    name: string,
+    columnNames: string[]
+  ): Promise<BoardModels.Board> => {
+    if (name.length === 4) {
+      throw new Error("Some server error");
+    }
+
+    await sleep(3000);
+
+    const newBoard: BoardModels.Board = {
+      id: name.length * 30,
+      name,
+      columns: columnNames.map((n, id) => ({
+        id,
+        name: n,
+        tasks: [],
+      })),
+    };
+
+    testData.unshift(newBoard);
+    return newBoard;
   };
 }

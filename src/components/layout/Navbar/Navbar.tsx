@@ -1,6 +1,6 @@
 import { NavbarLogo } from "@/components/layout/Navbar/NavbarLogo";
-import { PrimaryButton } from "@/components/shared/PrimaryButton";
 import { BoardQueries } from "@/util/board/board.queries";
+import { AppButton } from "@/components/shared/AppButton";
 
 export const Navbar = () => {
   const { data: selectedBoard } = BoardQueries.useSelectedBoard();
@@ -17,9 +17,9 @@ export const Navbar = () => {
             {selectedBoard?.name || ""}
           </h1>
           <div className="flex ">
-            <PrimaryButton disabled={selectedBoard == null}>
+            <AppButton disabled={selectedBoard == null}>
               + Add New Task
-            </PrimaryButton>
+            </AppButton>
           </div>
         </div>
         <div className="h-px bg-lines-light dark:bg-lines-dark" />

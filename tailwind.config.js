@@ -84,6 +84,9 @@ module.exports = {
         70: pxToRem(280),
         75: pxToRem(300),
       },
+      maxWidth: {
+        120: pxToRem(480),
+      },
       margin: {
         4.5: pxToRem(18),
         8.5: pxToRem(34),

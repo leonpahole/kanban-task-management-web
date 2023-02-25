@@ -18,4 +18,8 @@ export namespace BoardService {
   export const get = (id: number): Promise<BoardModels.Board> => {
     return BoardApi.get(id);
   };
+
+  export const add = (name: string, columnNames: string[]) => {
+    return BoardApi.add(name, columnNames);
+  };
 }
