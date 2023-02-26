@@ -13,6 +13,7 @@ interface IProps {
   label: string;
   options: AppDropdownOption[];
   value?: string | number;
+  disabled?: boolean;
   onSelect(option: AppDropdownOption): void;
 }
 
@@ -21,6 +22,7 @@ export const AppDropdown = ({
   label,
   options,
   value,
+  disabled,
   onSelect,
 }: IProps) => {
   return (
@@ -34,6 +36,7 @@ export const AppDropdown = ({
             onSelect(option);
           }
         }}
+        disabled={disabled}
         value={value}
         className={getAppInputClassNames(undefined, undefined)}
       >

@@ -18,7 +18,8 @@ export namespace BoardApi {
             {
               id: 4,
               title: "Build UI for onboarding flow",
-              description: "",
+              description:
+                "We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.",
               columnId: 3,
               subtasks: [
                 {
@@ -89,6 +90,11 @@ export namespace BoardApi {
               ],
             },
           ],
+        },
+        {
+          id: 12,
+          name: "Todo 2",
+          tasks: [],
         },
       ],
     },
@@ -222,14 +228,14 @@ export namespace BoardApi {
   export const editTask = async (
     id: number,
     boardId: number,
-    { columnId, title, description, subtasks }: BoardModels.TaskRequest
+    { columnId, title, description, subtasks }: Partial<BoardModels.TaskRequest>
   ): Promise<BoardModels.Task> => {
     const board = testData.find((b) => b.id === boardId);
     if (!board) {
       throw new Error("Board not found");
     }
 
-    const column = board.columns.find((c) => c.id === columnId);
+    const column = board.columns.find((c) => c.tasks.some((t) => t.id === id));
     if (!column) {
       throw new Error("Column not found");
     }
@@ -240,32 +246,107 @@ export namespace BoardApi {
       throw new Error("Task not found");
     }
 
-    const newSubtasks: BoardModels.Subtask[] = [];
+    if (subtasks) {
+      const newSubtasks: BoardModels.Subtask[] = [];
 
-    for (const subtask of subtasks) {
-      const existing =
-        subtask.id != null
-          ? task.subtasks.find((c) => c.id === subtask.id)
-          : undefined;
+      for (const subtask of subtasks) {
+        const existing =
+          subtask.id != null
+            ? task.subtasks.find((c) => c.id === subtask.id)
+            : undefined;
 
-      if (existing) {
-        newSubtasks.push({
-          ...existing,
-          title: subtask.name,
-        });
-      } else {
-        newSubtasks.push({
-          id: 100 * Math.random() + 20,
-          title: subtask.name,
-          isCompleted: false,
-        });
+        if (existing) {
+          newSubtasks.push({
+            ...existing,
+            title: subtask.name,
+          });
+        } else {
+          newSubtasks.push({
+            id: 100 * Math.random() + 20,
+            title: subtask.name,
+            isCompleted: false,
+          });
+        }
+      }
+
+      task.subtasks = newSubtasks;
+    }
+
+    if (description != null) {
+      task.description = description;
+    }
+
+    if (title) {
+      task.title = title;
+    }
+
+    if (columnId) {
+      if (column.id !== columnId) {
+        const newColumn = board.columns.find((c) => c.id === columnId);
+        if (!newColumn) {
+          throw new Error("Column doesn't exist");
+        }
+
+        newColumn.tasks.unshift(task);
+        column.tasks = column.tasks.filter((t) => t.id !== task.id);
+        task.columnId = columnId;
       }
     }
 
-    task.description = description;
-    task.title = title;
+    return task;
+  };
 
-    task.subtasks = newSubtasks;
+  export const deleteTask = async (
+    id: number,
+    boardId: number
+  ): Promise<void> => {
+    const board = testData.find((b) => b.id === boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    const column = board.columns.find((c) => c.tasks.some((t) => t.id === id));
+    if (!column) {
+      throw new Error("Column not found");
+    }
+
+    column.tasks = column.tasks.filter((t) => t.id === id);
+  };
+
+  export const changeSubtaskStatus = async (
+    id: number,
+    taskId: number,
+    boardId: number,
+    isCompleted: boolean
+  ) => {
+    const board = testData.find((b) => b.id === boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    const column = board.columns.find((c) =>
+      c.tasks.some((t) => t.id === taskId)
+    );
+    if (!column) {
+      throw new Error("Column not found");
+    }
+
+    const task = column.tasks.find((t) => t.id === taskId);
+
+    if (!task) {
+      throw new Error("Task not found");
+    }
+
+    task.subtasks = task.subtasks.map((st) => {
+      if (st.id === id) {
+        return {
+          ...st,
+          isCompleted,
+        };
+      }
+
+      return st;
+    });
 
     return task;
   };

@@ -20,7 +20,7 @@ export const AppButton = ({
   const variantHoverClassMap: Record<typeof variant, string> = {
     primary: "hover:bg-purple-hover",
     invert: "hover:bg-opacity-25",
-    danger: "hover:bg-opacity-75",
+    danger: "hover:bg-red-hover",
   };
 
   const sizeClassMap: Record<typeof size, string> = {

@@ -23,7 +23,7 @@ interface IProps {
   isOpen: boolean;
   onClose(): void;
   board: BoardModels.Board | undefined;
-  initialValue?: BoardModels.Task;
+  initialValue?: BoardModels.Task | null;
   onSubmit(value: BoardModels.TaskRequest): Promise<BoardModels.Task>;
   successMessage?: string;
   heading: string;

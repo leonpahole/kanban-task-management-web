@@ -41,8 +41,21 @@ export namespace BoardService {
   export const editTask = async (
     id: number,
     boardId: number,
-    request: BoardModels.TaskRequest
+    request: Partial<BoardModels.TaskRequest>
   ) => {
     return BoardApi.editTask(id, boardId, request);
+  };
+
+  export const deleteTask = async (id: number, boardId: number) => {
+    return BoardApi.deleteTask(id, boardId);
+  };
+
+  export const changeSubtaskStatus = async (
+    id: number,
+    taskId: number,
+    boardId: number,
+    isCompleted: boolean
+  ) => {
+    return BoardApi.changeSubtaskStatus(id, taskId, boardId, isCompleted);
   };
 }

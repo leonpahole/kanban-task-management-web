@@ -6,7 +6,7 @@ interface IProps {
   isOpen: boolean;
   onClose(): void;
   board: BoardModels.Board;
-  task: BoardModels.Task;
+  task: BoardModels.Task | null;
 }
 
 export const EditTaskModal = ({ isOpen, onClose, board, task }: IProps) => {
@@ -22,7 +22,7 @@ export const EditTaskModal = ({ isOpen, onClose, board, task }: IProps) => {
       onSubmit={(request) =>
         editTaskMutation.mutateAsync({
           boardId: board!.id,
-          id: task.id,
+          id: task!.id,
           request,
         })
       }

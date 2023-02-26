@@ -1,10 +1,8 @@
-import { AppMenu } from "@/components/shared/AppMenu";
-import { BoardModels } from "@/util/board/board.models";
-import IconVerticalEllipsis from "public/images/icon-vertical-ellipsis.svg";
-import Image from "next/image";
-import { EditBoardModal } from "@/components/board/boardList/EdtiBoardModal";
-import { useState } from "react";
 import { DeleteBoardModal } from "@/components/board/boardList/DeleteBoardModal";
+import { EditBoardModal } from "@/components/board/boardList/EdtiBoardModal";
+import { AppMenu, AppMenuVerticalEllipsis } from "@/components/shared/AppMenu";
+import { BoardModels } from "@/util/board/board.models";
+import { useState } from "react";
 
 interface IProps {
   board: BoardModels.Board | undefined;
@@ -24,15 +22,10 @@ export const NavbarBoardMenu = ({ board }: IProps) => {
       <AppMenu
         isOpen={isMenuOpen}
         onOpenChange={setIsMenuOpen}
+        offset={[0, 24]}
         buttonDisabled={board == null}
         buttonContent={
-          <Image
-            src={IconVerticalEllipsis}
-            alt="Open selected board menu"
-            width="5"
-            height="20"
-            className="box-content px-2"
-          />
+          <AppMenuVerticalEllipsis alt="Open selected board menu" />
         }
         menuClassName="flex w-full max-w-48 flex-col gap-4 rounded-lg bg-white p-4 shadow-lg dark:bg-gray-very-dark"
         menuContent={

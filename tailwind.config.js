@@ -111,6 +111,9 @@ module.exports = {
         "add-column-gradient-light":
           "linear-gradient(180deg, #E9EFFA 0%, rgba(233, 239, 250, 0.5) 100%)",
       },
+      content: {
+        checkmark: 'url("/images/icon-check.svg")',
+      },
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],

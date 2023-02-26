@@ -3,6 +3,7 @@ import { AppButton } from "@/components/shared/AppButton";
 import { AppInput } from "@/components/shared/forms/AppInput";
 import Image from "next/image";
 import IconCross from "public/images/icon-cross.svg";
+import { useRef } from "react";
 
 export type AppListInputValue = { id?: number; name: string }[];
 
@@ -27,6 +28,8 @@ export const AppListInput = ({
   buttonLabel,
   className,
 }: IProps) => {
+  const canAutoFocus = useRef<boolean>(false);
+
   const onInputValueChange = (index: number, text: string) => {
     const newValue = [...value];
     newValue[index].name = text;
@@ -35,6 +38,7 @@ export const AppListInput = ({
 
   const onInputAdd = () => {
     const newValue = [...value, { name: "" }];
+    canAutoFocus.current = true;
     onChange(newValue);
   };
 
@@ -58,7 +62,7 @@ export const AppListInput = ({
               value={val.name}
               placeholder={placeholders?.[i]}
               onTextChange={(text) => onInputValueChange(i, text)}
-              autoFocus={i > 0}
+              autoFocus={canAutoFocus.current}
               disabled={disabled}
             />
             <button

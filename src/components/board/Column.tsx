@@ -4,9 +4,10 @@ import { Task } from "@/components/board/task/Task";
 
 interface IProps {
   column: BoardModels.Column;
+  onTaskClick(task: BoardModels.Task): void;
 }
 
-export const Column = ({ column }: IProps) => {
+export const Column = ({ column, onTaskClick }: IProps) => {
   return (
     <section className="flex flex-shrink-0 flex-col">
       {/* heading */}
@@ -27,7 +28,13 @@ export const Column = ({ column }: IProps) => {
         {column.tasks.length > 0 ? (
           <>
             {column.tasks.map((task) => (
-              <Task key={task.id} task={task} />
+              <Task
+                key={task.id}
+                task={task}
+                onClick={() => {
+                  onTaskClick(task);
+                }}
+              />
             ))}
           </>
         ) : (

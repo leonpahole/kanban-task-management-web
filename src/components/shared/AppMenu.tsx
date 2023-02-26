@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { usePopper } from "react-popper";
+import IconVerticalEllipsis from "public/images/icon-vertical-ellipsis.svg";
+import Image from "next/image";
 
 interface IMenuPopperProps {
   referenceElement: HTMLElement | null;
   isOpen: boolean;
   onClose: () => void;
+  offset?: [number, number];
 }
 
 const useMenuPopper = ({
   referenceElement,
   isOpen,
   onClose,
+  offset,
 }: IMenuPopperProps) => {
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
 
@@ -23,7 +27,7 @@ const useMenuPopper = ({
       {
         name: "offset",
         options: {
-          offset: [22, 22],
+          offset,
         },
       },
       {
@@ -104,6 +108,7 @@ export interface IProps {
   menuContent: React.ReactNode;
   isOpen: boolean;
   onOpenChange(isOpen: boolean): void;
+  offset?: [number, number];
 }
 
 export const AppMenu = ({
@@ -113,6 +118,7 @@ export const AppMenu = ({
   menuContent,
   isOpen,
   onOpenChange,
+  offset,
 }: IProps) => {
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
     null
@@ -122,6 +128,7 @@ export const AppMenu = ({
     referenceElement,
     isOpen,
     onClose: () => onOpenChange(false),
+    offset,
   });
 
   return (
@@ -141,12 +148,24 @@ export const AppMenu = ({
         style={popperStyles.popper}
         className={`${
           isOpen ? "opacity-100" : "opacity-0"
-        } transition-opacity ${menuClassName}`}
+        } flex w-full max-w-48 flex-col gap-4 rounded-lg bg-white p-4 shadow-lg transition-opacity dark:bg-gray-very-dark ${menuClassName}`}
         aria-hidden={!isOpen}
         {...attributes.popper}
       >
         {menuContent}
       </div>
     </>
+  );
+};
+
+export const AppMenuVerticalEllipsis = ({ alt }: { alt: string }) => {
+  return (
+    <Image
+      src={IconVerticalEllipsis}
+      alt={alt}
+      width="5"
+      height="20"
+      className="box-content px-2"
+    />
   );
 };
