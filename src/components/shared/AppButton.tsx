@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from "react";
 
 type IProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "invert";
+  variant?: "primary" | "invert" | "danger";
   size?: "sm" | "md";
 };
 
@@ -14,11 +14,13 @@ export const AppButton = ({
   const variantClassMap: Record<typeof variant, string> = {
     primary: "bg-purple-100 text-white",
     invert: "bg-purple-100 bg-opacity-10 text-purple-100",
+    danger: "bg-red-100 text-white",
   };
 
   const variantHoverClassMap: Record<typeof variant, string> = {
     primary: "hover:bg-purple-hover",
     invert: "hover:bg-opacity-25",
+    danger: "hover:bg-opacity-75",
   };
 
   const sizeClassMap: Record<typeof size, string> = {

@@ -1,4 +1,4 @@
-import { BoardList } from "@/components/layout/Sidebar/BoardList/BoardList";
+import { BoardList } from "@/components/board/boardList/BoardList";
 import { ColorSchemeSwitcher } from "@/components/layout/Sidebar/ColorSchemeSwitcher";
 import { HideSidebarButton } from "@/components/layout/Sidebar/HideSidebarButton";
 import { ShowSidebarButton } from "@/components/layout/Sidebar/ShowsidebarButton";

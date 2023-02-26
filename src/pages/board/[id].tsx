@@ -32,7 +32,7 @@ export default function BoardView() {
         <ErrorText error={error as Error} onRetryClick={refetch} />
       </div>
     );
-  } else {
+  } else if (board) {
     content = <Board board={board!} />;
   }
 

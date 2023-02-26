@@ -1,7 +1,7 @@
 import { BoardModels } from "@/util/board/board.models";
 
 export namespace BoardApi {
-  const testData: BoardModels.Board[] = [
+  let testData: BoardModels.Board[] = [
     {
       id: 1,
       name: "No tasks",
@@ -19,6 +19,7 @@ export namespace BoardApi {
               id: 4,
               title: "Build UI for onboarding flow",
               description: "",
+              columnId: 3,
               subtasks: [
                 {
                   id: 5,
@@ -41,6 +42,7 @@ export namespace BoardApi {
               id: 8,
               title: "Build UI for search",
               description: "",
+              columnId: 3,
               subtasks: [
                 {
                   id: 9,
@@ -53,6 +55,7 @@ export namespace BoardApi {
               id: 10,
               title: "Build settings UI",
               description: "",
+              columnId: 3,
               subtasks: [
                 {
                   id: 20,
@@ -69,6 +72,7 @@ export namespace BoardApi {
             {
               id: 11,
               title: "QA and test all major user journeys",
+              columnId: 3,
               description:
                 "Once we feel version one is ready, we need to rigorously test it both internally and externally to identify any major gaps.",
               subtasks: [
@@ -114,10 +118,10 @@ export namespace BoardApi {
     return board;
   };
 
-  export const add = async (
-    name: string,
-    columnNames: string[]
-  ): Promise<BoardModels.Board> => {
+  export const add = async ({
+    name,
+    columns,
+  }: BoardModels.BoardRequest): Promise<BoardModels.Board> => {
     if (name.length === 4) {
       throw new Error("Some server error");
     }
@@ -127,9 +131,9 @@ export namespace BoardApi {
     const newBoard: BoardModels.Board = {
       id: name.length * 30,
       name,
-      columns: columnNames.map((n, id) => ({
+      columns: columns.map((n, id) => ({
         id,
-        name: n,
+        name: n.name,
         tasks: [],
       })),
     };
@@ -138,13 +142,58 @@ export namespace BoardApi {
     return newBoard;
   };
 
+  export const edit = async (
+    id: number,
+    { name, columns }: BoardModels.BoardRequest
+  ): Promise<BoardModels.Board> => {
+    if (name.length === 4) {
+      throw new Error("Some server error");
+    }
+
+    await sleep(3000);
+
+    const board = testData.find((b) => b.id === id);
+    if (!board) {
+      throw new Error("Board nout found");
+    }
+
+    board.name = name;
+
+    const newColumns: BoardModels.Column[] = [];
+
+    for (const column of columns) {
+      const existing =
+        column.id != null
+          ? board.columns.find((c) => c.id === column.id)
+          : undefined;
+
+      if (existing) {
+        newColumns.push({
+          ...existing,
+          name: column.name,
+        });
+      } else {
+        newColumns.push({
+          id: 100 * Math.random() + 20,
+          name: column.name,
+          tasks: [],
+        });
+      }
+    }
+
+    board.columns = newColumns;
+
+    return board;
+  };
+
+  export const del = async (id: number) => {
+    testData = testData.filter((b) => b.id !== id);
+  };
+
   export const addTask = async (
     boardId: number,
-    columnId: number,
-    title: string,
-    description: string,
-    subtasksNames: string[]
-  ) => {
+    { columnId, title, description, subtasks }: BoardModels.TaskRequest
+  ): Promise<BoardModels.Task> => {
     const board = testData.find((b) => b.id === boardId);
     if (!board) {
       throw new Error("Board not found");
@@ -155,19 +204,69 @@ export namespace BoardApi {
       throw new Error("Column not found");
     }
 
-    const newTask = {
+    const newTask: BoardModels.Task = {
       id: column.tasks.length,
       title,
       description,
-      subtasks: subtasksNames.map((sn, id) => ({
+      columnId,
+      subtasks: subtasks.map((sn, id) => ({
         id: id * 1000,
-        title: sn,
+        title: sn.name,
         isCompleted: false,
       })),
     };
 
-    // column.tasks = [newTask, ...column.tasks];
-
     return newTask;
+  };
+
+  export const editTask = async (
+    id: number,
+    boardId: number,
+    { columnId, title, description, subtasks }: BoardModels.TaskRequest
+  ): Promise<BoardModels.Task> => {
+    const board = testData.find((b) => b.id === boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    const column = board.columns.find((c) => c.id === columnId);
+    if (!column) {
+      throw new Error("Column not found");
+    }
+
+    const task = column.tasks.find((t) => t.id === id);
+
+    if (!task) {
+      throw new Error("Task not found");
+    }
+
+    const newSubtasks: BoardModels.Subtask[] = [];
+
+    for (const subtask of subtasks) {
+      const existing =
+        subtask.id != null
+          ? task.subtasks.find((c) => c.id === subtask.id)
+          : undefined;
+
+      if (existing) {
+        newSubtasks.push({
+          ...existing,
+          title: subtask.name,
+        });
+      } else {
+        newSubtasks.push({
+          id: 100 * Math.random() + 20,
+          title: subtask.name,
+          isCompleted: false,
+        });
+      }
+    }
+
+    task.description = description;
+    task.title = title;
+
+    task.subtasks = newSubtasks;
+
+    return task;
   };
 }

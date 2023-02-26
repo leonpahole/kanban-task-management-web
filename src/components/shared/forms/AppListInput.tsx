@@ -4,7 +4,7 @@ import { AppInput } from "@/components/shared/forms/AppInput";
 import Image from "next/image";
 import IconCross from "public/images/icon-cross.svg";
 
-export type AppListInputValue = string[];
+export type AppListInputValue = { id?: number; name: string }[];
 
 interface IProps {
   id: string;
@@ -29,12 +29,12 @@ export const AppListInput = ({
 }: IProps) => {
   const onInputValueChange = (index: number, text: string) => {
     const newValue = [...value];
-    newValue[index] = text;
+    newValue[index].name = text;
     onChange(newValue);
   };
 
   const onInputAdd = () => {
-    const newValue = [...value, ""];
+    const newValue = [...value, { name: "" }];
     onChange(newValue);
   };
 
@@ -55,7 +55,7 @@ export const AppListInput = ({
           <div className="flex gap-4" key={i}>
             <AppInput
               id={`${id}-app-list-input-${i}`}
-              value={val}
+              value={val.name}
               placeholder={placeholders?.[i]}
               onTextChange={(text) => onInputValueChange(i, text)}
               autoFocus={i > 0}

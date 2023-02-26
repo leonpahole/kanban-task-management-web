@@ -19,20 +19,30 @@ export namespace BoardService {
     return BoardApi.get(id);
   };
 
-  export const add = (request: BoardModels.AddBoardRequest) => {
-    return BoardApi.add(request.name, request.columnNames);
+  export const add = (request: BoardModels.BoardRequest) => {
+    return BoardApi.add(request);
+  };
+
+  export const edit = (id: number, request: BoardModels.BoardRequest) => {
+    return BoardApi.edit(id, request);
+  };
+
+  export const del = (id: number) => {
+    return BoardApi.del(id);
   };
 
   export const addTask = async (
     boardId: number,
-    request: BoardModels.AddTaskRequest
+    request: BoardModels.TaskRequest
   ) => {
-    return BoardApi.addTask(
-      boardId,
-      request.columnId,
-      request.title,
-      request.description,
-      request.subtasksNames
-    );
+    return BoardApi.addTask(boardId, request);
+  };
+
+  export const editTask = async (
+    id: number,
+    boardId: number,
+    request: BoardModels.TaskRequest
+  ) => {
+    return BoardApi.editTask(id, boardId, request);
   };
 }

@@ -1,8 +1,8 @@
-import { AddBoardModal } from "@/components/layout/Sidebar/BoardList/AddBoardModal";
+import { AddBoardModal } from "@/components/board/boardList/AddBoardModal";
 import {
   boardListItemBaseClasses,
   boardListItemHoverClasses,
-} from "@/components/layout/Sidebar/BoardList/BoardListItem";
+} from "@/components/board/boardList/BoardListItem";
 import Image from "next/image";
 import IconBoardPurple from "public/images/icon-board-purple.svg";
 import { useState } from "react";

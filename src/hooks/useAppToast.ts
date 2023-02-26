@@ -2,6 +2,10 @@ import { useCallback } from "react";
 import { toast } from "react-toastify";
 
 export const useAppToast = () => {
+  const success = useCallback((message: string) => {
+    toast.success(message);
+  }, []);
+
   const error = useCallback((message: string) => {
     toast.error(message);
   }, []);
@@ -12,5 +16,5 @@ export const useAppToast = () => {
     );
   }, []);
 
-  return { error, formattedError };
+  return { success, error, formattedError };
 };

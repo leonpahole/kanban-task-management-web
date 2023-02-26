@@ -1,3 +1,4 @@
 :root {
+  --toastify-color-success: theme("colors.green.700");
   --toastify-color-error: theme("colors.red.100");
 }

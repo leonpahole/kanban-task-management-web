@@ -1,5 +1,5 @@
-import { BoardListItem } from "@/components/layout/Sidebar/BoardList/BoardListItem";
-import { BoardListItemAdd } from "@/components/layout/Sidebar/BoardList/BoardListItemAdd";
+import { BoardListItem } from "@/components/board/boardList/BoardListItem";
+import { BoardListItemAdd } from "@/components/board/boardList/BoardListItemAdd";
 import { ErrorText } from "@/components/shared/ErrorText";
 import { CenteredSpinner } from "@/components/shared/Spinner";
 import { BoardService } from "@/util/board/board.service";

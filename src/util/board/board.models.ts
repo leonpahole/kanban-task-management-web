@@ -8,8 +8,8 @@ export namespace BoardModels {
     columns: Column[];
   }
 
-  export type AddBoardRequest = Pick<BoardExcerpt, "name"> & {
-    columnNames: string[];
+  export type BoardRequest = Pick<BoardExcerpt, "name"> & {
+    columns: { id?: number; name: string }[];
   };
 
   export interface Column {
@@ -21,13 +21,14 @@ export namespace BoardModels {
   export interface Task {
     id: number;
     title: string;
+    columnId: number;
     description: string;
     subtasks: Subtask[];
   }
 
-  export type AddTaskRequest = Pick<Task, "title" | "description"> & {
+  export type TaskRequest = Pick<Task, "title" | "description"> & {
     columnId: number;
-    subtasksNames: string[];
+    subtasks: { id?: number; name: string }[];
   };
 
   export enum TaskStatus {

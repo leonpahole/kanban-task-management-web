@@ -21,6 +21,7 @@
     "react/destructuring-assignment": "off",
     "no-bitwise": "off",
     "no-plusplus": "off",
+    "no-restricted-syntax": "off",
     "no-restricted-imports": [
       "error",
       {

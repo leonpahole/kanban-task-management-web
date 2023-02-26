@@ -85,6 +85,7 @@ module.exports = {
         75: pxToRem(300),
       },
       maxWidth: {
+        48: pxToRem(192),
         120: pxToRem(480),
       },
       margin: {
@@ -102,6 +103,7 @@ module.exports = {
       },
       boxShadow: {
         md: "0px 4px 6px rgba(54, 78, 126, 0.101545)",
+        lg: "0px 10px 20px rgba(54, 78, 126, 0.25)",
       },
       backgroundImage: {
         "add-column-gradient-dark":
