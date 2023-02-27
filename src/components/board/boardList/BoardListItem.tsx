@@ -6,7 +6,7 @@ import IconBoard from "public/images/icon-board.svg";
 import IconBoardWhite from "public/images/icon-board-white.svg";
 
 export const boardListItemBaseClasses =
-  "mr-6 flex items-center justify-start gap-4 rounded-r-full py-4 pl-8 pr-4 text-hm";
+  "mr-6 flex items-center justify-start gap-4 rounded-r-full py-3.5 md:py-4 pl-6 md:pl-8 pr-4 text-hm";
 
 export const boardListItemHoverClasses =
   "text-gray-medium hover:bg-purple-100 hover:bg-opacity-10 hover:text-purple-100 dark:hover:bg-white dark:hover:bg-opacity-100";

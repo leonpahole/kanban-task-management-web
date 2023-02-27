@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 import IconVerticalEllipsis from "public/images/icon-vertical-ellipsis.svg";
 import Image from "next/image";
+import { Padding } from "@popperjs/core";
 
 interface IMenuPopperProps {
   referenceElement: HTMLElement | null;
   isOpen: boolean;
   onClose: () => void;
   offset?: [number, number];
+  padding?: Padding;
 }
 
 const useMenuPopper = ({
@@ -15,6 +17,7 @@ const useMenuPopper = ({
   isOpen,
   onClose,
   offset,
+  padding,
 }: IMenuPopperProps) => {
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
 
@@ -33,10 +36,7 @@ const useMenuPopper = ({
       {
         name: "preventOverflow",
         options: {
-          padding: {
-            right: 24,
-            left: 24,
-          },
+          padding,
         },
       },
     ],
@@ -109,6 +109,7 @@ export interface IProps {
   isOpen: boolean;
   onOpenChange(isOpen: boolean): void;
   offset?: [number, number];
+  padding?: Padding;
 }
 
 export const AppMenu = ({
@@ -119,6 +120,7 @@ export const AppMenu = ({
   isOpen,
   onOpenChange,
   offset,
+  padding = { left: 24, right: 24 },
 }: IProps) => {
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
     null
@@ -129,6 +131,7 @@ export const AppMenu = ({
     isOpen,
     onClose: () => onOpenChange(false),
     offset,
+    padding,
   });
 
   return (
@@ -158,14 +161,20 @@ export const AppMenu = ({
   );
 };
 
-export const AppMenuVerticalEllipsis = ({ alt }: { alt: string }) => {
+export const AppMenuVerticalEllipsis = ({
+  alt,
+  className,
+}: {
+  alt: string;
+  className?: string;
+}) => {
   return (
     <Image
       src={IconVerticalEllipsis}
       alt={alt}
       width="5"
       height="20"
-      className="box-content px-2"
+      className={`box-content px-2 ${className}`}
     />
   );
 };

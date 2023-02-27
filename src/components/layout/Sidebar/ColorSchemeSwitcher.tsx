@@ -11,7 +11,7 @@ export const ColorSchemeSwitcher = withClientOnly(() => {
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
-    <div className="mx-6 flex items-center justify-center rounded-md bg-gray-light py-3.5 px-2 dark:bg-gray-very-dark">
+    <div className="mx-4 flex items-center justify-center rounded-md bg-gray-light py-3.5 px-2 dark:bg-gray-very-dark md:mx-6">
       <AppToggle
         isChecked={isDarkMode}
         onToggle={toggleDarkMode}

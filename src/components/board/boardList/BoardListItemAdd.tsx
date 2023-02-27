@@ -7,7 +7,11 @@ import Image from "next/image";
 import IconBoardPurple from "public/images/icon-board-purple.svg";
 import { useState } from "react";
 
-export const BoardListItemAdd = () => {
+interface IProps {
+  onModalOpen?(): void;
+}
+
+export const BoardListItemAdd = ({ onModalOpen }: IProps) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
 
   return (
@@ -15,6 +19,7 @@ export const BoardListItemAdd = () => {
       <li className="flex">
         <button
           onClick={() => {
+            onModalOpen?.();
             setIsAddModalOpen(true);
           }}
           className={`${boardListItemBaseClasses} ${boardListItemHoverClasses} flex-1 text-purple-100`}

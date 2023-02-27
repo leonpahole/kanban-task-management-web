@@ -43,6 +43,13 @@ module.exports = {
             fontWeight: "700",
           },
         ],
+        "hxl-t": [
+          pxToRem(20),
+          {
+            lineHeight: pxToRem(25),
+            fontWeight: "700",
+          },
+        ],
         hl: [
           pxToRem(18),
           {
@@ -81,6 +88,7 @@ module.exports = {
         ],
       },
       width: {
+        65: pxToRem(260),
         70: pxToRem(280),
         75: pxToRem(300),
       },
@@ -92,6 +100,7 @@ module.exports = {
         4.5: pxToRem(18),
         8.5: pxToRem(34),
         13.5: pxToRem(54),
+        65: pxToRem(260),
         75: pxToRem(300),
       },
       padding: {

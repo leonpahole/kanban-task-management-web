@@ -25,7 +25,10 @@ export const NavbarBoardMenu = ({ board }: IProps) => {
         offset={[0, 24]}
         buttonDisabled={board == null}
         buttonContent={
-          <AppMenuVerticalEllipsis alt="Open selected board menu" />
+          <AppMenuVerticalEllipsis
+            alt="Open selected board menu"
+            className="px-4"
+          />
         }
         menuClassName="flex w-full max-w-48 flex-col gap-4 rounded-lg bg-white p-4 shadow-lg dark:bg-gray-very-dark"
         menuContent={

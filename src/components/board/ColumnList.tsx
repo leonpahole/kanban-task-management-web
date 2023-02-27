@@ -43,7 +43,7 @@ export const ColumnList = ({ board, onTaskClick }: IProps) => {
   let content;
   if (board.columns.length === 0) {
     content = (
-      <div className="flex h-full flex-col items-center justify-center">
+      <div className="flex h-full flex-col items-center justify-center p-6">
         <p className="mb-8 text-center text-hl text-gray-medium">
           This board is empty. Create a new column to get started.
         </p>
@@ -71,7 +71,7 @@ export const ColumnList = ({ board, onTaskClick }: IProps) => {
           ))}
         </ReorderableList>
         <ColumnAdd onClick={() => setIsEditBoardModalOpen(true)} />
-        <div className="w-px flex-shrink-0" />
+        <div className="w-6 flex-shrink-0" />
       </div>
     );
   }

@@ -2,12 +2,12 @@ import { ButtonHTMLAttributes } from "react";
 
 type IProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "invert" | "danger";
-  size?: "sm" | "md";
+  size?: "sm" | "md" | "lg";
 };
 
 export const AppButton = ({
   variant = "primary",
-  size = "md",
+  size = "lg",
   children,
   ...props
 }: IProps) => {
@@ -25,7 +25,8 @@ export const AppButton = ({
 
   const sizeClassMap: Record<typeof size, string> = {
     sm: "text-bl p-2",
-    md: "text-hm py-3.5 px-6 ",
+    md: "py-2.5 px-4.5",
+    lg: "text-hm py-3.5 px-6 ",
   };
 
   return (

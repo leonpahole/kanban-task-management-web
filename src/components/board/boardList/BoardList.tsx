@@ -5,7 +5,12 @@ import { CenteredSpinner } from "@/components/shared/Spinner";
 import { BoardService } from "@/util/board/board.service";
 import { useQuery } from "react-query";
 
-export const BoardList = () => {
+interface IProps {
+  className?: string;
+  onModalOpen?(): void;
+}
+
+export const BoardList = ({ className, onModalOpen }: IProps) => {
   const {
     data: boards,
     isLoading,
@@ -32,15 +37,15 @@ export const BoardList = () => {
           {boards!.map((board) => (
             <BoardListItem board={board} key={board.id} />
           ))}
-          <BoardListItemAdd />
+          <BoardListItemAdd onModalOpen={onModalOpen} />
         </ul>
       </nav>
     );
   }
 
   return (
-    <div>
-      <h2 className="ml-8 mb-4.5 text-bm uppercase text-gray-medium">
+    <div className={className}>
+      <h2 className="mx-6 mb-4.5 text-bm uppercase text-gray-medium md:mx-8">
         All boards {boards ? `(${boards.length})` : ""}
       </h2>
       {content}
