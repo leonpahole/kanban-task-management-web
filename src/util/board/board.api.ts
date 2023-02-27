@@ -350,4 +350,73 @@ export namespace BoardApi {
 
     return task;
   };
+
+  export const reorderColumn = async (
+    boardId: number,
+    columnId: number,
+    index: number
+  ) => {
+    const board = testData.find((b) => b.id === boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    const columnIndex = board.columns.findIndex((c) => c.id === columnId);
+    if (columnIndex < 0) {
+      throw new Error("Column not found");
+    }
+
+    if (columnIndex === index) {
+      return index;
+    }
+
+    const column = board.columns[columnIndex];
+
+    board.columns.splice(columnIndex, 1);
+    board.columns.splice(index, 0, column);
+
+    return index;
+  };
+
+  export const reorderTask = async (
+    id: number,
+    boardId: number,
+    toIndex: number,
+    toColumnId: number
+  ) => {
+    const board = testData.find((b) => b.id === boardId);
+    if (!board) {
+      throw new Error("Board not found");
+    }
+
+    const fromColumn = board.columns.find((c) =>
+      c.tasks.some((t) => t.id === id)
+    );
+
+    if (!fromColumn) {
+      throw new Error("Column not found");
+    }
+
+    const taskIndex = fromColumn.tasks.findIndex((t) => t.id === id);
+
+    if (taskIndex < 0) {
+      throw new Error("Task not found");
+    }
+
+    if (taskIndex === toIndex && fromColumn.id === toColumnId) {
+      return { columnId: toColumnId, index: toIndex };
+    }
+
+    const toColumn = board.columns.find((c) => c.id === toColumnId);
+
+    if (!toColumn) {
+      throw new Error("Column not found");
+    }
+
+    const task = fromColumn.tasks[taskIndex];
+    fromColumn.tasks.splice(taskIndex, 1);
+    toColumn.tasks.splice(toIndex, 0, task);
+
+    return { columnId: toColumn.id, index: toIndex };
+  };
 }

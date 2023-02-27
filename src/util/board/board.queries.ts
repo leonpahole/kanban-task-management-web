@@ -295,4 +295,140 @@ export namespace BoardQueries {
       },
     });
   };
+
+  export const useReorderColumn = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: ({
+        boardId,
+        columnId,
+        index,
+      }: {
+        boardId: number;
+        columnId: number;
+        index: number;
+      }) => {
+        return BoardService.reorderColumn(boardId, columnId, index);
+      },
+      onSuccess: (newIndex, variables) => {
+        queryClient.setQueryData(
+          boardKey(variables.boardId),
+          (prevBoard: BoardModels.Board | undefined) => {
+            if (!prevBoard) {
+              return undefined as any;
+            }
+
+            const newColumns = [...prevBoard.columns];
+            const columnIndex = newColumns.findIndex(
+              (col) => col.id === variables.columnId
+            );
+
+            if (columnIndex < 0) {
+              return prevBoard;
+            }
+
+            const column = newColumns[columnIndex];
+
+            newColumns.splice(columnIndex, 1);
+
+            let newIndexAdjusted = newIndex;
+            if (columnIndex < newIndex) {
+              newIndexAdjusted--;
+            }
+
+            newColumns.splice(newIndexAdjusted, 0, column);
+
+            return {
+              ...prevBoard,
+              columns: newColumns,
+            };
+          }
+        );
+      },
+    });
+  };
+
+  export const useReorderTask = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+      mutationFn: ({
+        id,
+        boardId,
+        toIndex,
+        toColumnId,
+      }: {
+        id: number;
+        boardId: number;
+        toIndex: number;
+        toColumnId: number;
+      }) => {
+        return BoardService.reorderTask(id, boardId, toIndex, toColumnId);
+      },
+      onSuccess: ({ columnId: newColumnId, index: newIndex }, variables) => {
+        queryClient.setQueryData(
+          boardKey(variables.boardId),
+          (prevBoard: BoardModels.Board | undefined) => {
+            if (!prevBoard) {
+              return undefined as any;
+            }
+
+            let taskToMove: BoardModels.Task | undefined;
+            for (const column of prevBoard.columns) {
+              taskToMove = column.tasks.find((t) => t.id === variables.id);
+              if (taskToMove) {
+                break;
+              }
+            }
+
+            if (!taskToMove) {
+              return prevBoard;
+            }
+
+            const columns = prevBoard.columns.map((column) => {
+              const taskIndex = column.tasks.findIndex(
+                (task) => task.id === variables.id
+              );
+
+              const isTargetColumn = column.id === newColumnId;
+
+              const tasks = [...column.tasks];
+
+              if (taskIndex >= 0) {
+                // same column, just reorder
+                if (isTargetColumn) {
+                  tasks.splice(taskIndex, 1);
+                  let newIndexAdjusted = newIndex;
+
+                  if (taskIndex < newIndex) {
+                    newIndexAdjusted--;
+                  }
+
+                  tasks.splice(newIndexAdjusted, 0, taskToMove!);
+                }
+                // need to remove from this column
+                else {
+                  tasks.splice(taskIndex, 1);
+                }
+              } else if (isTargetColumn) {
+                // need to insert in this column
+                tasks.splice(newIndex, 0, taskToMove!);
+              }
+
+              return {
+                ...column,
+                tasks,
+              };
+            });
+
+            return {
+              ...prevBoard,
+              columns,
+            };
+          }
+        );
+      },
+    });
+  };
 }

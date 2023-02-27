@@ -1,11 +1,9 @@
-import { Column } from "@/components/board/Column";
-import { ColumnAdd } from "@/components/board/ColumnAdd";
-import { BoardModels } from "@/util/board/board.models";
-import { AppButton } from "@/components/shared/AppButton";
-import { useMemo, useState } from "react";
-import { ViewTaskModal } from "@/components/board/task/ViewTaskModal";
-import { EditTaskModal } from "@/components/board/task/EditTaskModal";
+import { ColumnList } from "@/components/board/ColumnList";
 import { DeleteTaskModal } from "@/components/board/task/DeleteTaskModal";
+import { EditTaskModal } from "@/components/board/task/EditTaskModal";
+import { ViewTaskModal } from "@/components/board/task/ViewTaskModal";
+import { BoardModels } from "@/util/board/board.models";
+import { useMemo, useState } from "react";
 
 interface IProps {
   board: BoardModels.Board;
@@ -37,29 +35,13 @@ export const Board = ({ board }: IProps) => {
   return (
     <>
       <div className="min-h-0 flex-1 flex-col overflow-x-auto">
-        {board.columns.length > 0 ? (
-          <div className="flex h-full min-h-0 flex-1 gap-6 pl-6 pt-6">
-            {board.columns.map((column) => (
-              <Column
-                key={column.id}
-                column={column}
-                onTaskClick={(task) => {
-                  setSelectedTaskId(task.id);
-                  setModalOpen("view");
-                }}
-              />
-            ))}
-            <ColumnAdd board={board} />
-            <div className="w-px flex-shrink-0" />
-          </div>
-        ) : (
-          <div className="flex h-full flex-col items-center justify-center">
-            <p className="mb-8 text-center text-hl text-gray-medium">
-              This board is empty. Create a new column to get started.
-            </p>
-            <AppButton>+ Add New Column</AppButton>
-          </div>
-        )}
+        <ColumnList
+          board={board}
+          onTaskClick={(task) => {
+            setSelectedTaskId(task.id);
+            setModalOpen("view");
+          }}
+        />
       </div>
       <ViewTaskModal
         board={board}

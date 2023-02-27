@@ -58,4 +58,21 @@ export namespace BoardService {
   ) => {
     return BoardApi.changeSubtaskStatus(id, taskId, boardId, isCompleted);
   };
+
+  export const reorderColumn = async (
+    boardId: number,
+    columnId: number,
+    index: number
+  ) => {
+    return BoardApi.reorderColumn(boardId, columnId, index);
+  };
+
+  export const reorderTask = async (
+    id: number,
+    boardId: number,
+    toIndex: number,
+    toColumnId: number
+  ) => {
+    return BoardApi.reorderTask(id, boardId, toIndex, toColumnId);
+  };
 }

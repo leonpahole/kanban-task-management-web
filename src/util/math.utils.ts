@@ -1,5 +1,7 @@
 export namespace MathUtils {
-  export const parseNumber = (num: string | null): number | null => {
+  export const parseNumber = (
+    num: string | null | undefined
+  ): number | null => {
     if (num == null) {
       return null;
     }
