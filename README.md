@@ -41,6 +41,8 @@ Users should be able to:
 
 - Next.js
 - Tailwind
+- Popper.js
+- Nest.js, Typeorm and Postgres (on the backend)
 
 ## Author
 
