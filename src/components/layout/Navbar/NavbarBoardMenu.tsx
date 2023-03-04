@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import { DeleteBoardModal } from "@/components/board/boardList/DeleteBoardModal";
 import { EditBoardModal } from "@/components/board/boardList/EdtiBoardModal";
 import { AppMenu, AppMenuVerticalEllipsis } from "@/components/shared/AppMenu";
