@@ -106,7 +106,7 @@ const ViewTaskModalContent = ({
   const subtasksCheckboxListValues: AppCheckboxListValue = task.subtasks.map(
     (st) => ({
       id: st.id,
-      label: st.title,
+      label: st.name,
       value: st.isCompleted,
     })
   );

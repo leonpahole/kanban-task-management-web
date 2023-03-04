@@ -39,7 +39,7 @@ export namespace BoardModels {
 
   export interface Subtask {
     id: number;
-    title: string;
+    name: string;
     isCompleted: boolean;
   }
 }

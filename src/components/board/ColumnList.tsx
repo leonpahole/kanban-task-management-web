@@ -84,6 +84,7 @@ export const ColumnList = ({ board, onTaskClick }: IProps) => {
         isOpen={isEditBoardModalOpen}
         onClose={() => setIsEditBoardModalOpen(false)}
         board={board}
+        autoFocusColumns
       />
     </>
   );

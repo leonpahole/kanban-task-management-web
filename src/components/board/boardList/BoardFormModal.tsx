@@ -22,6 +22,7 @@ interface IProps {
   navigateToBoardAfterSuccess?: boolean;
   heading: string;
   submitButtonLabel: string;
+  autoFocusColumns?: boolean;
 }
 
 export const BoardFormModal = ({
@@ -33,6 +34,7 @@ export const BoardFormModal = ({
   navigateToBoardAfterSuccess,
   heading,
   submitButtonLabel,
+  autoFocusColumns = false,
 }: IProps) => {
   const router = useRouter();
   const toast = useAppToast();
@@ -92,16 +94,15 @@ export const BoardFormModal = ({
         columns: board.columns.filter((c) => StringUtils.isNotBlank(c.name)),
       });
 
-      onClose();
+      if (navigateToBoardAfterSuccess) {
+        router.push(`/board/${boardResult.id}`);
+      }
 
       if (successMessage) {
         toast.success(successMessage);
       }
 
-      if (navigateToBoardAfterSuccess) {
-        router.push(`/board/${boardResult.id}`);
-      }
-
+      onClose();
       resetForm();
     } catch (e: any) {
       toast.formattedError(e?.message);
@@ -134,7 +135,7 @@ export const BoardFormModal = ({
           value={board.name}
           onTextChange={(name) => updateBoard({ name })}
           error={nameError}
-          autoFocus
+          autoFocus={!autoFocusColumns}
           disabled={isLoading}
         />
 
@@ -148,6 +149,7 @@ export const BoardFormModal = ({
           disabled={isLoading}
           placeholders={["e.g. Todo", "e.g. Doing", "e.g. Done"]}
           buttonLabel="+ Add New Column"
+          autoFocusLastOnMount={autoFocusColumns}
         />
 
         <AppButton

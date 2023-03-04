@@ -16,6 +16,7 @@ interface IProps {
   placeholders?: string[];
   buttonLabel: string;
   className?: string;
+  autoFocusLastOnMount?: boolean;
 }
 
 export const AppListInput = ({
@@ -27,8 +28,9 @@ export const AppListInput = ({
   placeholders,
   buttonLabel,
   className,
+  autoFocusLastOnMount = false,
 }: IProps) => {
-  const canAutoFocus = useRef<boolean>(false);
+  const canAutoFocus = useRef<boolean>(autoFocusLastOnMount);
 
   const onInputValueChange = (index: number, text: string) => {
     const newValue = [...value];

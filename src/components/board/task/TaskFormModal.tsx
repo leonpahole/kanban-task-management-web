@@ -65,7 +65,7 @@ export const TaskFormModal = ({
         description: initialValue.description,
         subtasks: initialValue.subtasks.map((subtask) => ({
           id: subtask.id,
-          name: subtask.title,
+          name: subtask.name,
         })),
         title: initialValue.title,
         columnId: initialValue.columnId,

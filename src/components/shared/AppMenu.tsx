@@ -150,7 +150,7 @@ export const AppMenu = ({
         ref={setPopperElement}
         style={popperStyles.popper}
         className={`${
-          isOpen ? "opacity-100" : "opacity-0"
+          isOpen ? "opacity-100" : "-z-10 opacity-0"
         } flex w-full max-w-48 flex-col gap-4 rounded-lg bg-white p-4 shadow-lg transition-opacity dark:bg-gray-very-dark ${menuClassName}`}
         aria-hidden={!isOpen}
         {...attributes.popper}

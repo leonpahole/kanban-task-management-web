@@ -6,9 +6,15 @@ interface IProps {
   isOpen: boolean;
   onClose(): void;
   board: BoardModels.Board;
+  autoFocusColumns?: boolean;
 }
 
-export const EditBoardModal = ({ isOpen, onClose, board }: IProps) => {
+export const EditBoardModal = ({
+  isOpen,
+  onClose,
+  board,
+  autoFocusColumns = false,
+}: IProps) => {
   const addBoardMutation = BoardQueries.useEditBoard();
 
   return (
@@ -22,6 +28,7 @@ export const EditBoardModal = ({ isOpen, onClose, board }: IProps) => {
       heading="Edit board"
       submitButtonLabel="Save Changes"
       successMessage="Board edited!"
+      autoFocusColumns={autoFocusColumns}
     />
   );
 };
