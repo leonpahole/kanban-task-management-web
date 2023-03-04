@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -27,20 +28,22 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/favicon-32x32.png" />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <div className={`font-sans ${plusJakartaSans.variable}`}>
-            <Component {...pageProps} />
-          </div>
-        </ThemeProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <ToastContainer
-          position="bottom-center"
-          hideProgressBar
-          theme="colored"
-          bodyClassName="!font-sans"
-        />
-      </QueryClientProvider>
+      <UserProvider>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider>
+            <div className={`font-sans ${plusJakartaSans.variable}`}>
+              <Component {...pageProps} />
+            </div>
+          </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <ToastContainer
+            position="bottom-center"
+            hideProgressBar
+            theme="colored"
+            bodyClassName="!font-sans"
+          />
+        </QueryClientProvider>
+      </UserProvider>
     </>
   );
 }

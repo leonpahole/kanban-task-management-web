@@ -2,10 +2,11 @@ import { BoardList } from "@/components/board/boardList/BoardList";
 import { ColorSchemeSwitcher } from "@/components/layout/Sidebar/ColorSchemeSwitcher";
 import { HideSidebarButton } from "@/components/layout/Sidebar/HideSidebarButton";
 import { ShowSidebarButton } from "@/components/layout/Sidebar/ShowsidebarButton";
+import { withClientOnly } from "@/components/shared/withClientOnly";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 import { useLayout } from "@/providers/LayoutContext";
 
-export const Sidebar = () => {
+export const Sidebar = withClientOnly(() => {
   const { isSidebarOpen, showSidebar, hideSidebar } = useLayout();
   const { isMd } = useBreakpoint("md");
 
@@ -35,4 +36,4 @@ export const Sidebar = () => {
       )}
     </>
   );
-};
+});

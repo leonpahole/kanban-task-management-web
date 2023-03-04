@@ -3,8 +3,9 @@ import { BoardQueries } from "@/util/board/board.queries";
 import { NavbarAddTask } from "@/components/layout/Navbar/NavbarAddTask";
 import { NavbarBoardMenu } from "@/components/layout/Navbar/NavbarBoardMenu";
 import { NavbarBoardName } from "@/components/layout/Navbar/NavbarBoardName";
+import { withClientOnly } from "@/components/shared/withClientOnly";
 
-export const Navbar = () => {
+export const Navbar = withClientOnly(() => {
   const { data: selectedBoard } = BoardQueries.useSelectedBoard();
 
   return (
@@ -25,4 +26,4 @@ export const Navbar = () => {
       </div>
     </header>
   );
-};
+});

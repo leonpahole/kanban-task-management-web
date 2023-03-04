@@ -23,7 +23,6 @@ export const NavbarBoardMenu = ({ board }: IProps) => {
         isOpen={isMenuOpen}
         onOpenChange={setIsMenuOpen}
         offset={[0, 24]}
-        buttonDisabled={board == null}
         buttonContent={
           <AppMenuVerticalEllipsis
             alt="Open selected board menu"
@@ -33,26 +32,36 @@ export const NavbarBoardMenu = ({ board }: IProps) => {
         menuClassName="flex w-full max-w-48 flex-col gap-4 rounded-lg bg-white p-4 shadow-lg dark:bg-gray-very-dark"
         menuContent={
           <>
-            <button
-              type="button"
+            {board && (
+              <>
+                <button
+                  type="button"
+                  className="text-start text-bl text-gray-medium"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsEditBoardModalOpen(true);
+                  }}
+                >
+                  Edit board
+                </button>
+                <button
+                  type="button"
+                  className="text-start text-bl text-red-100"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsDeleteBoardModalOpen(true);
+                  }}
+                >
+                  Delete board
+                </button>
+              </>
+            )}
+            <a
               className="text-start text-bl text-gray-medium"
-              onClick={() => {
-                setIsMenuOpen(false);
-                setIsEditBoardModalOpen(true);
-              }}
+              href="/api/auth/logout"
             >
-              Edit board
-            </button>
-            <button
-              type="button"
-              className="text-start text-bl text-red-100"
-              onClick={() => {
-                setIsMenuOpen(false);
-                setIsDeleteBoardModalOpen(true);
-              }}
-            >
-              Delete board
-            </button>
+              Logout
+            </a>
           </>
         }
       />

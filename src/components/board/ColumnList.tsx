@@ -27,7 +27,8 @@ export const ColumnList = ({ board, onTaskClick }: IProps) => {
         await reorderColumnMutation.mutateAsync({
           boardId: board.id,
           columnId: board.columns[fromIndex].id,
-          index: toIndex,
+          insertAfterColumnId:
+            toIndex === 0 ? null : board.columns[toIndex - 1].id,
         });
         return { success: true };
       } catch (e: any) {

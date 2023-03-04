@@ -40,39 +40,36 @@ export namespace BoardService {
 
   export const editTask = async (
     id: number,
-    boardId: number,
     request: Partial<BoardModels.TaskRequest>
   ) => {
-    return BoardApi.editTask(id, boardId, request);
+    return BoardApi.editTask(id, request);
   };
 
-  export const deleteTask = async (id: number, boardId: number) => {
-    return BoardApi.deleteTask(id, boardId);
+  export const deleteTask = async (id: number) => {
+    return BoardApi.deleteTask(id);
   };
 
   export const changeSubtaskStatus = async (
     id: number,
     taskId: number,
-    boardId: number,
     isCompleted: boolean
   ) => {
-    return BoardApi.changeSubtaskStatus(id, taskId, boardId, isCompleted);
+    return BoardApi.changeSubtaskStatus(id, taskId, isCompleted);
   };
 
   export const reorderColumn = async (
     boardId: number,
     columnId: number,
-    index: number
+    insertAfterColumnId: number | null
   ) => {
-    return BoardApi.reorderColumn(boardId, columnId, index);
+    return BoardApi.reorderColumn(boardId, columnId, insertAfterColumnId);
   };
 
   export const reorderTask = async (
     id: number,
-    boardId: number,
-    toIndex: number,
-    toColumnId: number
+    insertAfterTaskId: number | null,
+    columnId: number
   ) => {
-    return BoardApi.reorderTask(id, boardId, toIndex, toColumnId);
+    return BoardApi.reorderTask(id, insertAfterTaskId, columnId);
   };
 }

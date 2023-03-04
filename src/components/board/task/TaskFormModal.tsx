@@ -103,7 +103,10 @@ export const TaskFormModal = ({
     setIsLoading(true);
 
     try {
-      await onSubmit(task);
+      await onSubmit({
+        ...task,
+        subtasks: task.subtasks.filter((c) => StringUtils.isNotBlank(c.name)),
+      });
 
       onClose();
       setTask(null);

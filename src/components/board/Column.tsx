@@ -26,19 +26,29 @@ export const Column = ({ board, column, onTaskClick }: IProps) => {
       fromId: string | undefined,
       toId: string | undefined
     ) => {
-      const fromIdNumber = MathUtils.parseNumber(fromId);
-      const toIdNumber = MathUtils.parseNumber(toId);
-
-      if (fromIdNumber == null || toIdNumber == null) {
-        return { success: false };
-      }
-
       try {
+        const fromIdNumber = MathUtils.parseNumber(fromId);
+        const toIdNumber = MathUtils.parseNumber(toId);
+
+        if (fromIdNumber == null || toIdNumber == null) {
+          return { success: false };
+        }
+
+        let insertAfterTaskId: number | null = null;
+        if (toIndex > 0) {
+          const columnToMoveTo = board.columns.find((c) => c.id === toIdNumber);
+          if (columnToMoveTo == null) {
+            return { success: false };
+          }
+
+          insertAfterTaskId = columnToMoveTo.tasks[toIndex - 1].id;
+        }
+
         await reorderTaskMutation.mutateAsync({
           boardId: board.id,
           id: column.tasks[fromIndex].id,
-          toIndex,
-          toColumnId: toIdNumber,
+          insertAfterTaskId,
+          columnId: toIdNumber,
         });
         return { success: true };
       } catch (e: any) {
@@ -48,7 +58,7 @@ export const Column = ({ board, column, onTaskClick }: IProps) => {
 
       return { success: false };
     },
-    [board.id, column.tasks, formattedError, reorderTaskMutation]
+    [board.columns, board.id, column.tasks, formattedError, reorderTaskMutation]
   );
 
   return (

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from "react";
-import Sortable from "sortablejs";
+import { useCallback, useRef } from "react";
+import Sortable, { SortableEvent } from "sortablejs";
 
 interface IProps {
   className?: string;
@@ -27,53 +27,59 @@ export const ReorderableList = ({
 }: IProps) => {
   const sortable = useRef<Sortable | null>(null);
 
-  useEffect(() => {
-    sortable.current?.option("disabled", disabled);
-  }, [disabled]);
+  const onReorderEnd = useCallback(
+    async (evt: SortableEvent) => {
+      const fromId = evt.from.dataset.dragid;
+      const toId = evt.to.dataset.dragid;
+
+      const oldIndex = evt.oldDraggableIndex as number;
+      const newIndex = evt.newDraggableIndex as number;
+
+      if (oldIndex === newIndex && fromId === toId) {
+        return undefined;
+      }
+
+      const { success } = await onReorder(oldIndex, newIndex, fromId, toId);
+
+      if (success) {
+        return undefined;
+      }
+
+      // undo
+      const { tagName } = evt.item;
+      const items = evt.from.getElementsByTagName(tagName);
+
+      if (oldIndex > newIndex) {
+        evt.from.insertBefore(evt.item, items[oldIndex + 1]);
+      } else {
+        evt.from.insertBefore(evt.item, items[oldIndex]);
+      }
+
+      return false;
+    },
+    [onReorder]
+  );
 
   const onDivRef = useCallback(
     (ref: HTMLDivElement | null) => {
-      if (!ref || sortable.current) {
+      if (!ref) {
         return;
       }
 
-      sortable.current = Sortable.create(ref, {
-        group: groupName,
-        animation: 150,
-        handle: handleClassName ? `.${handleClassName}` : undefined,
-        disabled,
-        onEnd: async (evt) => {
-          const fromId = evt.from.dataset.dragid;
-          const toId = evt.to.dataset.dragid;
-
-          const oldIndex = evt.oldDraggableIndex as number;
-          const newIndex = evt.newDraggableIndex as number;
-
-          if (oldIndex === newIndex && fromId === toId) {
-            return undefined;
-          }
-
-          const { success } = await onReorder(oldIndex, newIndex, fromId, toId);
-
-          if (success) {
-            return undefined;
-          }
-
-          // undo
-          const { tagName } = evt.item;
-          const items = evt.from.getElementsByTagName(tagName);
-
-          if (oldIndex > newIndex) {
-            evt.from.insertBefore(evt.item, items[oldIndex + 1]);
-          } else {
-            evt.from.insertBefore(evt.item, items[oldIndex]);
-          }
-
-          return false;
-        },
-      });
+      if (sortable.current) {
+        sortable.current.option("disabled", disabled);
+        sortable.current.option("onEnd", onReorderEnd);
+      } else {
+        sortable.current = Sortable.create(ref, {
+          group: groupName,
+          animation: 150,
+          handle: handleClassName ? `.${handleClassName}` : undefined,
+          disabled,
+          onEnd: onReorderEnd,
+        });
+      }
     },
-    [disabled, groupName, handleClassName, onReorder]
+    [disabled, groupName, handleClassName, onReorderEnd]
   );
 
   return (

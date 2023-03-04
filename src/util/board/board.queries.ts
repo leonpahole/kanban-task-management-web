@@ -166,14 +166,13 @@ export namespace BoardQueries {
     return useMutation({
       mutationFn: ({
         id,
-        boardId,
         request,
       }: {
         id: number;
         boardId: number;
         request: Partial<BoardModels.TaskRequest>;
       }) => {
-        return BoardService.editTask(id, boardId, request);
+        return BoardService.editTask(id, request);
       },
       onSuccess: (editedTask, variables) => {
         updateQueryClientWithEditedTask(
@@ -237,8 +236,8 @@ export namespace BoardQueries {
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: ({ id, boardId }: { id: number; boardId: number }) => {
-        return BoardService.deleteTask(id, boardId);
+      mutationFn: ({ id }: { id: number; boardId: number }) => {
+        return BoardService.deleteTask(id);
       },
       onSuccess: (_, variables) => {
         queryClient.setQueryData(
@@ -271,7 +270,6 @@ export namespace BoardQueries {
       mutationFn: ({
         id,
         taskId,
-        boardId,
         isCompleted,
       }: {
         id: number;
@@ -279,12 +277,7 @@ export namespace BoardQueries {
         boardId: number;
         isCompleted: boolean;
       }) => {
-        return BoardService.changeSubtaskStatus(
-          id,
-          taskId,
-          boardId,
-          isCompleted
-        );
+        return BoardService.changeSubtaskStatus(id, taskId, isCompleted);
       },
       onSuccess: (editedTask, variables) => {
         updateQueryClientWithEditedTask(
@@ -303,15 +296,19 @@ export namespace BoardQueries {
       mutationFn: ({
         boardId,
         columnId,
-        index,
+        insertAfterColumnId,
       }: {
         boardId: number;
         columnId: number;
-        index: number;
+        insertAfterColumnId: number | null;
       }) => {
-        return BoardService.reorderColumn(boardId, columnId, index);
+        return BoardService.reorderColumn(
+          boardId,
+          columnId,
+          insertAfterColumnId
+        );
       },
-      onSuccess: (newIndex, variables) => {
+      onSuccess: (_, variables) => {
         queryClient.setQueryData(
           boardKey(variables.boardId),
           (prevBoard: BoardModels.Board | undefined) => {
@@ -326,6 +323,19 @@ export namespace BoardQueries {
 
             if (columnIndex < 0) {
               return prevBoard;
+            }
+
+            let newIndex = 0;
+            if (variables.insertAfterColumnId != null) {
+              const insertAfterColumnIndex = newColumns.findIndex(
+                (col) => col.id === variables.insertAfterColumnId
+              );
+
+              if (insertAfterColumnIndex < 0) {
+                return prevBoard;
+              }
+
+              newIndex = insertAfterColumnIndex + 1;
             }
 
             const column = newColumns[columnIndex];
@@ -355,18 +365,17 @@ export namespace BoardQueries {
     return useMutation({
       mutationFn: ({
         id,
-        boardId,
-        toIndex,
-        toColumnId,
+        insertAfterTaskId,
+        columnId,
       }: {
         id: number;
         boardId: number;
-        toIndex: number;
-        toColumnId: number;
+        insertAfterTaskId: number | null;
+        columnId: number;
       }) => {
-        return BoardService.reorderTask(id, boardId, toIndex, toColumnId);
+        return BoardService.reorderTask(id, insertAfterTaskId, columnId);
       },
-      onSuccess: ({ columnId: newColumnId, index: newIndex }, variables) => {
+      onSuccess: (_, variables) => {
         queryClient.setQueryData(
           boardKey(variables.boardId),
           (prevBoard: BoardModels.Board | undefined) => {
@@ -386,12 +395,31 @@ export namespace BoardQueries {
               return prevBoard;
             }
 
+            const insertToColumn = prevBoard.columns.find(
+              (c) => c.id === variables.columnId
+            );
+            if (!insertToColumn) {
+              return prevBoard;
+            }
+
+            let newIndex = 0;
+            if (variables.insertAfterTaskId != null) {
+              const taskIndex = insertToColumn.tasks.findIndex(
+                (t) => t.id === variables.insertAfterTaskId
+              );
+              if (taskIndex < 0) {
+                return prevBoard;
+              }
+
+              newIndex = taskIndex + 1;
+            }
+
             const columns = prevBoard.columns.map((column) => {
               const taskIndex = column.tasks.findIndex(
                 (task) => task.id === variables.id
               );
 
-              const isTargetColumn = column.id === newColumnId;
+              const isTargetColumn = column.id === variables.columnId;
 
               const tasks = [...column.tasks];
 
